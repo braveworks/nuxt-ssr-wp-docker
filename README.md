@@ -5,21 +5,29 @@ Docker Compose with Nuxt SSR and WordPress REST API
 ## Build Setup
 
 ```bash
-# docker compose
-docker-compose up -d
-
 # install dependencies
-$ docker-compose run --rm nuxt yarn install
+$ yarn install
 
 # serve with hot reload at localhost:3000
-# $ docker-compose run --rm nuxt yarn run dev
+$ yarn run dev
 
 # build for production and launch server
-$ docker-compose run --rm nuxt yarn run build
-$ docker-compose run --rm nuxt yarn start
+$ yarn run build
+$ yarn start
 
 # generate static project
-$ docker-compose run --rm nuxt yarn run generate
+$ yarn run generate
+```
+
+## docker
+
+```bash
+# start wordpress and db
+docker-compose up -d
+
+# wp-cli (enter cli container)
+docker-compose run --rm cli bash
+
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
