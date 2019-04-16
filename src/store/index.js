@@ -9,6 +9,7 @@ export const state = () => ({
   article: null,
   articles: [],
   page: null,
+  pages: [],
   authorArticles: [],
   authors: null,
   indexInfiniteLoading: {
@@ -24,7 +25,7 @@ export const state = () => ({
   },
   topicArticles: [],
   topics: null,
-  wordpressAPI: 'http://wordpress:80/wp-json'
+  wordpressAPI: 'http://localhost:5000/wp-json'
 })
 
 export const mutations = {
@@ -36,6 +37,9 @@ export const mutations = {
   },
   setPage(state, data) {
     state.page = data
+  },
+  setPages(state, data) {
+    state.pages = state.pages.concat(data)
   },
   setAuthorArticles(state, data) {
     state.authorArticles.push(data)

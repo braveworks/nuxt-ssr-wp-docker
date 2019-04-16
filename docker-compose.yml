@@ -1,16 +1,16 @@
 version: '3.1'
 
 services:
-  nuxt:
-    build: .
-    tty: true
-    command: npm run dev
-    volumes:
-      - .:/app
-    ports:
-      - 8000:3000
-    links:
-      - wordpress
+  # nuxt:
+  #   build: .
+  #   tty: true
+  #   command: npm run dev
+  #   volumes:
+  #     - .:/app
+  #   ports:
+  #     - 8000:3000
+  #   links:
+  #     - wordpress
 
   wordpress:
     image: wordpress
