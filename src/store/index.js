@@ -25,6 +25,7 @@ export const state = () => ({
   },
   topicArticles: [],
   topics: null,
+  wpTotalPages: 0,
   wordpressAPI: 'http://localhost:5000/wp-json'
 })
 
@@ -50,6 +51,9 @@ export const mutations = {
   setIndexInfiniteLoading(state, data) {
     state.indexInfiniteLoading = data
   },
+  setIndexInfiniteLoadingPageCount(state, data) {
+    state.indexInfiniteLoading.page = data
+  },
   setFeaturedColor(state, data) {
     state.featuredColor = data
   },
@@ -64,5 +68,8 @@ export const mutations = {
   },
   setTopics(state, data) {
     state.topics = data
+  },
+  setWpTotalPages(state, data) {
+    state.wpTotalPages = data
   }
 }

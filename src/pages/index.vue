@@ -24,6 +24,13 @@ section.container
             nuxt-link(:to="{ path: `/posts/${post.id}/`, params: { id: post.id } }")
               | {{ post.title.rendered }}
           time {{ post.date.slice(0, 10) }}
+        InfiniteLoading(
+          v-if="indexInfiniteLoading.enabled"
+          ref="infiniteLoading"
+          spinner="spiral"
+          @infinite="infiniteHandler"
+        )
+          div(slot="no-results")
 </template>
 
 <script>
@@ -38,6 +45,9 @@ export default {
     },
     pages() {
       return this.$store.state.pages
+    },
+    indexInfiniteLoading() {
+      return this.$store.state.indexInfiniteLoading
     }
   },
   async asyncData({ app, store, params, error, payload }) {
@@ -56,12 +66,34 @@ export default {
           store.state.featuredID
         }&_embed`
       )
+      store.commit('setWpTotalPages', articles.headers['x-wp-totalpages'])
       store.commit('setArticles', articles.data)
     }
   },
   methods: {
     path(link) {
       return path.basename(link)
+    },
+    infiniteHandler(state) {
+      this.$store.commit(
+        'setIndexInfiniteLoadingPageCount',
+        this.indexInfiniteLoading.page + 1
+      )
+      this.$axios
+        .get(
+          `${
+            this.$store.state.wordpressAPI
+          }/wp/v2/posts?orderby=date&per_page=10&categories_exclude=${
+            this.$store.state.featuredID
+          }&page=${this.indexInfiniteLoading.page}&_embed`
+        )
+        .then(response => {
+          this.$store.commit('setArticles', response.data)
+          state.loaded()
+        })
+        .catch(() => {
+          state.complete()
+        })
     }
   }
 }
